@@ -140,7 +140,7 @@ public class UserDaoImp implements UserDao {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,begin);
-            preparedStatement.setInt(2,begin + pageSize);
+            preparedStatement.setInt(2,pageSize);
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()){

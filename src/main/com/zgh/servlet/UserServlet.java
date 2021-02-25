@@ -54,11 +54,8 @@ public class UserServlet extends BaseServlet {
 
     //分页
     public void page(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        System.out.println("用户管理");
         int pageNo = req.getParameter("pageNo")==null||Integer.parseInt(req.getParameter("pageNo"))==0?1:Integer.parseInt(req.getParameter("pageNo"));
         int pageSize = req.getParameter("pageSize")==null||Integer.parseInt(req.getParameter("pageSize"))== 0?Page.PAGE_SIZE:Integer.parseInt(req.getParameter("pageSize"));
-        System.out.println(pageNo);
-        System.out.println(pageSize);
         Page<UserEntity> page = userServer.page(pageNo,pageSize);
         req.setAttribute("page",page);
         req.setAttribute("pageSize",pageSize);

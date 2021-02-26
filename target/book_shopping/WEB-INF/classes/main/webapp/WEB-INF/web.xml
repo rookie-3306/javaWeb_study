@@ -9,9 +9,18 @@
     <servlet-name>UserServlet</servlet-name>
     <servlet-class>main.com.zgh.servlet.UserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CookieServlet</servlet-name>
+    <servlet-class>main.com.zgh.servlet.CookieServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/userServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CookieServlet</servlet-name>
+    <url-pattern>/cookieServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

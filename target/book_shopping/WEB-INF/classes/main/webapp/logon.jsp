@@ -36,7 +36,7 @@
             <input type="hidden" name="action" value="logon">
 <%--            <%=request.getAttribute("msg")==null?"请输入账号密码!":request.getAttribute("msg")%><br/>--%>
             ${empty requestScope.msg == null?"请输入账号密码!":requestScope.msg}<br/>
-            用户名:<input type="text" name="username" /><br />
+            用户名:<input type="text" name="username" value="${cookie.username.value}"/><br />
             密&nbsp;&nbsp;&nbsp;码:<input type="password" name="password" /><br />
             <input type="submit" id="sub" value="登录" />
             <input type="button" id="register" value="注册" style="margin-left: 155px;"/>

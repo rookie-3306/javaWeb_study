@@ -7,6 +7,7 @@ import main.com.zgh.server.UserServerImp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,6 +21,10 @@ public class UserServlet extends BaseServlet {
         String password = req.getParameter("password");
         boolean flush = userServer.logon(username,password);
         if(flush){
+            Cookie cookie = new Cookie("username",username);
+            //设置保存用户名的cookie一周的存活时间
+            cookie.setMaxAge(60 * 60 * 24 * 7);
+            resp.addCookie(cookie);
             //跳转
         }
         else{

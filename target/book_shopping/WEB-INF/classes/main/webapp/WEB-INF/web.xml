@@ -13,6 +13,10 @@
     <servlet-name>CookieServlet</servlet-name>
     <servlet-class>main.com.zgh.servlet.CookieServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SessionServlet</servlet-name>
+    <servlet-class>main.com.zgh.servlet.SessionServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
@@ -22,5 +26,13 @@
     <servlet-name>CookieServlet</servlet-name>
     <url-pattern>/cookieServlet</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>SessionServlet</servlet-name>
+    <url-pattern>/sessionServlet</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>20</session-timeout>
+  </session-config>
+
 </web-app>

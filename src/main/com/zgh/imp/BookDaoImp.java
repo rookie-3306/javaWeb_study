@@ -2,7 +2,6 @@ package main.com.zgh.imp;
 
 import main.com.zgh.dao.BookDao;
 import main.com.zgh.entity.BookEntity;
-import main.com.zgh.entity.UserEntity;
 import main.com.zgh.util.JDBCUtil;
 
 import java.sql.Connection;
@@ -19,7 +18,7 @@ public class BookDaoImp implements BookDao {
     }
     @Override
     public boolean addBook(BookEntity bookEntity) {
-        String sql = "INSERT INTO book_shopping.book(name,price,author,sales,stock) " +
+        String sql = "INSERT INTO book_information(name,price,author,sales,stock) " +
                 "VALUES(?,?,?,?,?)";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -39,7 +38,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public boolean deleteBookById(int id) {
-        String sql = "DELETE FROM book WHERE id = ?";
+        String sql = "DELETE FROM book_information WHERE id = ?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,id);
@@ -54,7 +53,7 @@ public class BookDaoImp implements BookDao {
 
     @Override
     public boolean updateBook(BookEntity bookEntity) {
-        String sql = "UPDATE book SET price=?,author=?,sales=?,stock=? " +
+        String sql = "UPDATE book_information SET price=?,author=?,sales=?,stock=? " +
                 "WHERE name=?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -75,7 +74,7 @@ public class BookDaoImp implements BookDao {
     @Override
     public BookEntity findBookById(int id) {
         BookEntity result = null;
-        String sql = "SELECT * FROM book WHERE id=?";
+        String sql = "SELECT * FROM book_information WHERE id=?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,id);
@@ -96,7 +95,7 @@ public class BookDaoImp implements BookDao {
     @Override
     public List<BookEntity> findAllBook() {
         List<BookEntity> bookEntities = new ArrayList<>();
-        String sql = "SELECT * FROM book";
+        String sql = "SELECT * FROM book_information";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.execute();

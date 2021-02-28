@@ -18,7 +18,7 @@
 <div style="width: 250px;display: inline-block;border-style: solid;border-width: 5px;border-color: #7FFFD4;">
     <ul style="list-style: none;">
         <li style="list-style: none;"><a href="sessionServlet?action=getSession">Session的获取or创建</a></li>
-        <li style="list-style: none;"><a href="sessionServlet?action=setAttribute">Session的数据存储</a></li>\
+        <li style="list-style: none;"><a href="sessionServlet?action=setAttribute">Session的数据存储</a></li>
         <li style="list-style: none;"><a href="sessionServlet?action=getAttribute">获取Session中存储的数据</a></li>
         <li style="list-style: none;"><a href="sessionServlet?action=setMaxInactiveInterval">设置Session的超时时长</a></li>
         <li style="list-style: none;"><a href="sessionServlet?action=getMaxInactiveInterval">获取Session的超时时长</a></li>

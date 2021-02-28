@@ -17,6 +17,10 @@
     <servlet-name>SessionServlet</servlet-name>
     <servlet-class>main.com.zgh.servlet.SessionServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>BookServlet</servlet-name>
+    <servlet-class>main.com.zgh.servlet.BookServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
@@ -29,6 +33,10 @@
   <servlet-mapping>
     <servlet-name>SessionServlet</servlet-name>
     <url-pattern>/sessionServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BookServlet</servlet-name>
+    <url-pattern>/bookServlet</url-pattern>
   </servlet-mapping>
 
   <session-config>

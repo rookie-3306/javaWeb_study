@@ -2,6 +2,7 @@ package main.com.zgh.imp;
 
 import main.com.zgh.dao.BookDao;
 import main.com.zgh.entity.BookEntity;
+import main.com.zgh.entity.UserEntity;
 import main.com.zgh.util.JDBCUtil;
 
 import java.sql.Connection;
@@ -113,9 +114,58 @@ public class BookDaoImp implements BookDao {
         return bookEntities;
     }
 
+    @Override
+    public int recordsNumber() {
+        String sql = "SELECT COUNT(*) FROM book_information";
+        int count = 0;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()){
+                count = resultSet.getInt(1);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public List<BookEntity> findRange(int begin, int number) {
+        List<BookEntity> bookEntities = new ArrayList<>();
+        String sql = "SELECT * FROM book_information limit ?,?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,begin);
+            preparedStatement.setInt(2,number);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()){
+                BookEntity bookEntity = new BookEntity();
+                bookEntity.setId(resultSet.getInt("id"));
+                bookEntity.setName(resultSet.getString("name"));
+                bookEntity.setPrice(resultSet.getFloat("price"));
+                bookEntity.setAuthor(resultSet.getString("author"));
+                bookEntity.setSales(resultSet.getInt("sales"));
+                bookEntity.setStock(resultSet.getInt("stock"));
+                bookEntities.add(bookEntity);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return bookEntities;
+    }
+
     public static void main(String[] args) {
         BookDao bookDao = new BookDaoImp();
-        BookEntity bookEntity = new BookEntity(-1,"朝花夕拾",20.00f,"鲁迅",100,10);
-        bookDao.addBook(bookEntity);
+//        BookEntity bookEntity = new BookEntity(-1,"朝花夕拾",20.00f,"鲁迅",100,10);
+//        bookDao.addBook(bookEntity);
+//        System.out.println(bookDao.recordsNumber());
+        List<BookEntity> bookEntities = bookDao.findAllBook();
+        for(BookEntity item:bookEntities){
+            System.out.println(item.getName());
+        }
     }
 }

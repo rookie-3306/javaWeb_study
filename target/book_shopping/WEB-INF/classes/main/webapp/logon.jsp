@@ -42,6 +42,7 @@
             <input type="button" id="register" value="注册" style="margin-left: 155px;"/>
         </form>
         <a href="userServlet?action=page">用户管理</a>
+        <a href="bookServlet?action=page" style="float:right;">书籍管理</a>
     </div>
 </div>
 </body>

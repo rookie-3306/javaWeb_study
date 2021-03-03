@@ -1,10 +1,11 @@
 package main.com.zgh.dao;
 
 import main.com.zgh.entity.UserEntity;
+import main.com.zgh.pojo.IPage;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends IPage<UserEntity> {
     //添加用户
     boolean addUser(UserEntity user);
     //检测是否存在次用户
@@ -18,5 +19,5 @@ public interface UserDao {
     //查询记录条数
     int recordsNumber();
     //查找范围内的
-    List<UserEntity> findRange(int begin, int pageSize);
+    List<UserEntity> findRange(int begin, int number);
 }

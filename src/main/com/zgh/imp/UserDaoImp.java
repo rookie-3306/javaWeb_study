@@ -3,8 +3,6 @@ package main.com.zgh.imp;
 import main.com.zgh.dao.UserDao;
 import main.com.zgh.entity.UserEntity;
 import main.com.zgh.util.JDBCUtil;
-
-import javax.xml.registry.infomodel.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,13 +132,13 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public List<UserEntity> findRange(int begin, int pageSize) {
+    public List<UserEntity> findRange(int begin, int number) {
         List<UserEntity> userEntities = new ArrayList<>();
         String sql = "SELECT * FROM user limit ?,?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,begin);
-            preparedStatement.setInt(2,pageSize);
+            preparedStatement.setInt(2,number);
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()){

@@ -1,11 +1,11 @@
 package main.com.zgh.dao;
 
 import main.com.zgh.entity.BookEntity;
-import main.com.zgh.entity.UserEntity;
+import main.com.zgh.pojo.IPage;
 
 import java.util.List;
 
-public interface BookDao {
+public interface BookDao extends IPage<BookEntity> {
     boolean addBook(BookEntity bookEntity);
     boolean deleteBookById(int id);
     boolean updateBook(BookEntity bookEntity);

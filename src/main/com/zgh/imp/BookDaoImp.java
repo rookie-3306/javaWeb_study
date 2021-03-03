@@ -2,7 +2,6 @@ package main.com.zgh.imp;
 
 import main.com.zgh.dao.BookDao;
 import main.com.zgh.entity.BookEntity;
-import main.com.zgh.entity.UserEntity;
 import main.com.zgh.util.JDBCUtil;
 
 import java.sql.Connection;
@@ -133,13 +132,13 @@ public class BookDaoImp implements BookDao {
     }
 
     @Override
-    public List<BookEntity> findRange(int begin, int number) {
+    public List<BookEntity> findRange(int begin, int size) {
         List<BookEntity> bookEntities = new ArrayList<>();
         String sql = "SELECT * FROM book_information limit ?,?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,begin);
-            preparedStatement.setInt(2,number);
+            preparedStatement.setInt(2,size);
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()){

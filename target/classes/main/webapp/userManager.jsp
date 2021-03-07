@@ -12,6 +12,16 @@
 <html>
 <head>
     <title>用户管理器</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let turn_page_value = document.getElementById("pn_input");
+            let turn_page_button = document.getElementById("turn_page_button");
+            turn_page_button.onclick = function(){
+                let href = "${pageContext.request.contextPath}" + "/userServlet?action=page&pageNo=" + turn_page_value.value + "&pageSize=${requestScope.pageSize}";
+                window.location.href = href;
+            }
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -55,8 +65,8 @@
             <c:if test="${requestScope.page.pageNo != requestScope.page.pageTotal}"><a href="${pageContext.request.contextPath}/userServlet?action=page&pageNo=${requestScope.page.pageNo+1}&pageSize=${requestScope.pageSize}">下一页</a></c:if>
         </span>
         <a href="${pageContext.request.contextPath}/userServlet?action=page&pageNo=${requestScope.page.pageTotal}&pageSize=${requestScope.pageSize}">末页</a>
-        共${requestScope.page.pageTotal}页,${requestScope.page.pageTotalCount}条记录 到第<input style="width: 20px;" value="4" name="pn" id="pn_input"/>页
-        <input type="button" value="确定">
+        共${requestScope.page.pageTotal}页,${requestScope.page.pageTotalCount}条记录 到第<input style="width: 20px;" value="${requestScope.page.pageNo}" name="pn" id="pn_input"/>页
+        <input type="button" value="确定" id="turn_page_button">
     </div>
 </div>
 </body>

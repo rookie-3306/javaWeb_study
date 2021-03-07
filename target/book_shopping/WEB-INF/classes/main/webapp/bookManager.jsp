@@ -13,11 +13,37 @@
 <html>
 <head>
     <title>书籍管理</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let turn_page_value = document.getElementById("pn_input");
+            let turn_page_button = document.getElementById("turn_page_button");
+            let add_Book_But = document.getElementById("add_Book_But");
+            turn_page_button.onclick = function(){
+                let href = "${pageContext.request.contextPath}" + "/bookServlet?action=page&pageNo=" + turn_page_value.value + "&pageSize=${requestScope.pageSize}";
+                window.location.href = href;
+            }
+            add_Book_But.onclick = function(){
+                let href = "${pageContext.request.contextPath}" + "/addBook.jsp";
+                window.location.href = href;
+            }
+            //显示消息
+            let message = "${requestScope.bookMsg}";
+            if (message == ""){
+
+            }
+            else{
+                alert(message);
+                <%
+                    request.setAttribute("bookMsg","");
+                %>
+            }
+        }
+    </script>
 </head>
 <body>
 <div>
-    <div style="margin: 0 auto;background-color: bisque;width: 587px;">
-        <table border="1">
+    <div style="margin: 0 auto;">
+        <table border="1" style="margin: 0 auto;background-color: bisque;">
             <tr>
                 <th>ID</th>
                 <th>NAME</th>
@@ -25,6 +51,8 @@
                 <th>AUTHOR(作者)</th>
                 <th>SALES(售出)</th>
                 <th>STOCK(库存)</th>
+                <th></th>
+                <th></th>
             </tr>
             <c:forEach items="${requestScope.page.items}" var="item">
                 <tr>
@@ -34,6 +62,8 @@
                     <td>${item.author}</td>
                     <td>${item.sales}</td>
                     <td>${item.stock}</td>
+                    <td><a href="${pageContext.request.contextPath}/bookServlet?action=forwardUpdateBookJsp&bookId=${item.id}">修改</a></td>
+                    <td><a href="${pageContext.request.contextPath}/bookServlet?action=deleteBookById&bookId=${item.id}">删除</a></td>
                 </tr>
             </c:forEach>
         </table>
@@ -60,8 +90,9 @@
             <c:if test="${requestScope.page.pageNo != requestScope.page.pageTotal}"><a href="${pageContext.request.contextPath}/bookServlet?action=page&pageNo=${requestScope.page.pageNo+1}&pageSize=${requestScope.pageSize}">下一页</a></c:if>
         </span>
         <a href="${pageContext.request.contextPath}/bookServlet?action=page&pageNo=${requestScope.page.pageTotal}&pageSize=${requestScope.pageSize}">末页</a>
-        共${requestScope.page.pageTotal}页,${requestScope.page.pageTotalCount}条记录 到第<input style="width: 20px;" value="4" name="pn" id="pn_input"/>页
-        <input type="button" value="确定">
+        共${requestScope.page.pageTotal}页,${requestScope.page.pageTotalCount}条记录 到第<input style="width: 20px;" value="${requestScope.page.pageNo}" name="pn" id="pn_input"/>页
+        <input type="button" value="确定" id="turn_page_button">
+        <button type="button" style="width: 470px;margin-top: 20px;" id="add_Book_But">新增图书</button>
     </div>
 </div>
 </body>

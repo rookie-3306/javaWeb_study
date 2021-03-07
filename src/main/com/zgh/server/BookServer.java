@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface BookServer {
     Page<BookEntity> page(int pageNo,int pageSize);
-//    List<BookEntity> findAllBook();
-//    boolean addBook(BookEntity bookEntity);
-//    boolean deleteBookById(int bookId);
+    boolean deleteBookById(int bookId);
+    boolean updateBookInformation(BookEntity bookEntity);
+    BookEntity findBookById(int bookId);
+    boolean addBook(BookEntity bookEntity);
+    //    List<BookEntity> findAllBook();
 //    boolean deleteBookByName(String bookName);
-//    boolean updateBookInformation(BookEntity bookEntity);
 }

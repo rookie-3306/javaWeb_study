@@ -12,4 +12,24 @@ public class BookServerImp implements BookServer{
     public Page<BookEntity> page(int pageNo, int pageSize) {
         return new PageUtil<BookEntity>().createPage(bookDao,pageNo,pageSize);
     }
+
+    @Override
+    public boolean deleteBookById(int bookId) {
+        return bookDao.deleteBookById(bookId);
+    }
+
+    @Override
+    public boolean updateBookInformation(BookEntity bookEntity) {
+        return bookDao.updateBook(bookEntity);
+    }
+
+    @Override
+    public BookEntity findBookById(int bookId) {
+        return bookDao.findBookById(bookId);
+    }
+
+    @Override
+    public boolean addBook(BookEntity bookEntity) {
+        return bookDao.addBook(bookEntity);
+    }
 }

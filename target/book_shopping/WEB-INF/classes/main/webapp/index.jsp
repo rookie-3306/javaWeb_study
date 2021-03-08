@@ -10,7 +10,7 @@
 <div id="top_bg">
     <div id="top">
         <ul class="left">
-            <li><a href="logon.jsp">登录</a></li>
+            <li><a href="userServlet?action=forwardLogon">登录</a></li>
             <li><a href="#">免费注册</a></li>
         </ul>
         <ul class="right">

@@ -8,4 +8,6 @@ public interface UserServer {
     boolean logon(String username,String password);
     boolean register(String username,String password,String nickname);
     boolean existence(String username);
+    UserEntity findUserById(int userId);
+    UserEntity findUserByName(String userName);
 }

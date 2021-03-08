@@ -38,4 +38,14 @@ public class UserServerImp implements UserServer{
     public boolean existence(String username) {
         return userDao.existenceInUser(username);
     }
+
+    @Override
+    public UserEntity findUserById(int userId) {
+        return userDao.getUser(userId);
+    }
+
+    @Override
+    public UserEntity findUserByName(String userName) {
+        return userDao.getUser(userName);
+    }
 }

@@ -82,7 +82,24 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public UserEntity getUser(String username) {
-        return null;
+        UserEntity userEntity = new UserEntity();
+        String sql = "SELECT * FROM user WHERE username=?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,username);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()){
+                userEntity.setId(resultSet.getInt("id"));
+                userEntity.setUsername(resultSet.getString("username"));
+                userEntity.setPassword(resultSet.getString("password"));
+                userEntity.setNickname(resultSet.getString("nickname"));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return userEntity;
     }
 
     @Override

@@ -7,6 +7,24 @@
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
         $(function(){
+            //显示消息
+            let message = "${requestScope.msg}";
+            if (message == ""){
+
+            }
+            else{
+                alert(message);
+                <%
+                    request.setAttribute("msg","");
+                %>
+            }
+
+            //验证码单击事件
+            $("#code_img").click(function () {
+                //加上事件随机数,防止浏览器直接从缓存中取已经缓存好的图片
+                this.src = "kaptcha.jpg?d=" + new Date();
+            });
+
             $("#sub").click(function(){
                 var username_re = /^[a-zA-Z][a-zA-Z0-9_]{5,20}$/;
                 var username = $("#username").val();
@@ -49,8 +67,9 @@
         账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:<input type="text" name="username" id="username"/><br/>
         密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:<input type="password" name="password" id="password" /><br/>
         确认密码:<input type="password" name="againPassword" id="againPassword" /><br />
-        <input type="submit" value="提交" id="sub" />
-        <input type="button" value="取消" style="margin-left: 158px;" />
+        验&nbsp;&nbsp;证&nbsp;&nbsp;码:<input type="text" name="code" style="width:60px"><img id="code_img" src="kaptcha.jpg" style="width: 100px;;"><br />
+        <input type="submit" value="提交" id="sub"/>
+        <input type="button" value="取消" style="float:right;">
     </form>
     <a href="userServlet?action="></a>
 </div>

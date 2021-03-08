@@ -4,6 +4,7 @@ import main.com.zgh.entity.UserEntity;
 import main.com.zgh.pojo.Page;
 import main.com.zgh.server.UserServer;
 import main.com.zgh.server.UserServerImp;
+import main.com.zgh.util.WebUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
 public class UserServlet extends BaseServlet {
     UserServer userServer = new UserServerImp();
@@ -22,10 +25,12 @@ public class UserServlet extends BaseServlet {
         boolean flush = userServer.logon(username,password);
         if(flush){
             Cookie cookie = new Cookie("username",username);
+            UserEntity user = userServer.findUserByName(username);
+            req.getSession().setAttribute("user",user);
             //设置保存用户名的cookie一周的存活时间
             cookie.setMaxAge(60 * 60 * 24 * 7);
             resp.addCookie(cookie);
-            //跳转
+            req.getRequestDispatcher("/mainPage.jsp").forward(req,resp);
         }
         else{
             req.setAttribute("msg","账号或者密码错误!");
@@ -34,8 +39,31 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    //跳转登录界面
+    public void forwardLogon(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        //判断是否有上次登录的用户cookie
+        Cookie userCookie = WebUtil.getWantCookie("username",req.getCookies());
+        if(userCookie != null){
+            UserEntity user = userServer.findUserByName(userCookie.getValue());
+            req.getSession().setAttribute("user",user);
+            req.getRequestDispatcher("/mainPage.jsp").forward(req,resp);
+        }
+        else{
+            req.getRequestDispatcher("/logon.jsp").forward(req,resp);
+        }
+    }
+
     //注册
     public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        //验证码操作
+        String token = (String)req.getSession().getAttribute(KAPTCHA_SESSION_KEY);
+        req.getSession().removeAttribute(KAPTCHA_SESSION_KEY);
+        String code = req.getParameter("code");
+        if(token == null || !token.equalsIgnoreCase(code)){
+            req.setAttribute("msg","验证码错误!");
+            req.getRequestDispatcher("/register.jsp").forward(req,resp);
+        }
+
         req.setCharacterEncoding("UTF-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -49,11 +77,12 @@ public class UserServlet extends BaseServlet {
         }
         else {
             if(userServer.register(username,password,nickname)){
-                resp.getWriter().write("<h1>注册成功!</h1>");
+                req.setAttribute("msg","注册成功!");
             }
             else {
-                resp.getWriter().write("<h1>注册失败!原因xxxxxxx!</h1>");
+                req.setAttribute("msg","注册失败!原因:xxxxxx");
             }
+            req.getRequestDispatcher("/register.jsp").forward(req,resp);
         }
     }
 
@@ -65,5 +94,16 @@ public class UserServlet extends BaseServlet {
         req.setAttribute("page",page);
         req.setAttribute("pageSize",pageSize);
         req.getRequestDispatcher("/userManager.jsp").forward(req,resp);
+    }
+
+    //注销
+    public void cancellation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        //销毁Session中保存的user数据
+        req.removeAttribute("user");
+        //通知浏览器销毁cookie
+        Cookie wantDeleteCookie = WebUtil.getWantCookie("username",req.getCookies());
+        wantDeleteCookie.setMaxAge(0);
+        resp.addCookie(wantDeleteCookie);
+        req.getRequestDispatcher("/logon.jsp").forward(req,resp);
     }
 }
